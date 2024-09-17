@@ -1,0 +1,17 @@
+<nav aria-label="Page navigation example">
+  <ul class="list-style-none flex">
+    <li>
+      <a href="<%= page > 1 ? `?page=${page - 1}` : '#' %>" class="relative block rounded px-3 py-1.5 text-sm transition duration-300 <%= page === 1 ? 'pointer-events-none text-surface/50 dark:text-neutral-400' : 'text-surface hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700' %>" <%= page === 1 ? 'aria-disabled="true"' : '' %>>Trước</a>
+    </li>
+
+    <% for(let i = 1; i <= totalPages; i++) { %>
+    <li <%= page === i ? 'aria-current="page"' : '' %>>
+      <a href="?page=<%= i %>" class="relative block rounded px-3 py-1.5 text-sm transition duration-300 <%= page === i ? 'bg-primary-600 text-red-500 font-medium dark:bg-primary-500 dark:text-white' : 'bg-transparent text-surface hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700' %>"><%= i %></a>
+    </li>
+    <% } %>
+
+    <li>
+      <a href="<%= page < totalPages ? `?page=${page + 1}` : '#' %>" class="relative block rounded px-3 py-1.5 text-sm transition duration-300 <%= page === totalPages ? 'pointer-events-none text-surface/50 dark:text-neutral-400' : 'text-surface hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700' %>" <%= page === totalPages ? 'aria-disabled="true"' : '' %>>Sau</a>
+    </li>
+  </ul>
+</nav>

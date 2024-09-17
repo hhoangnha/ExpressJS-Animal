@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="keywords"
+      content="rắn, loài rắn, <%= data.vietnamese_name %>, tên khoa học <%= data.latin_name %>, rắn <%= data.family_name %>, loài rắn độc, tìm hiểu loài rắn"
+    />
+    <meta name="author" content="Tên tác giả hoặc tổ chức của bạn" />
+    <meta name="robots" content="index, follow" />
+    <link rel="icon" href="images/logo_new.png" type="image/x-icon" />
+    <title>
+      <%= data.vietnamese_name %> (<%= data.latin_name %>) - Thông tin chi tiết
+      | Tên trang web
+    </title>
+
+    <meta
+      name="description"
+      content="Khám phá chi tiết về loài rắn <%= data.vietnamese_name %> (tên khoa học: <%= data.latin_name %>). Đây là loài <%= data.isToxin %>, thuộc họ <%= data.family_name %>. Tìm hiểu về đặc điểm, phân bố và sinh thái học ngay!"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org/",
+        "@type": "Animal",
+        "name": "<%= data.vietnamese_name %>",
+        "alternateName": "<%= data.latin_name %>",
+        "image": "<%= data.images[0].image_url %>",
+        "description": "<%= noHtmldescription %>",
+        "scientificName": "<%= data.latin_name %>",
+        "taxonomicRank": "species",
+        "taxonomy": {
+          "@type": "Taxon",
+          "taxonRank": "family",
+          "name": "<%= data.family_name %>"
+        },
+        "habitat": "<%= noHtmlhabitat %>",
+        "diet": "<%=noHtmlfood %>"
+      }
+    </script>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css"
+    />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.9.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
+    <style>
+      .main-slider img {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+      }
+      .thumbnail-slider img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        cursor: pointer;
+      }
+      #map {
+        height: 600px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+      <a
+        href="/"
+        class="mb-8 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+      >
+        Quay lại
+      </a>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        <!-- Cột hình ảnh -->
+        <div>
+          <div class="main-slider mb-4">
+            <% for(var i = 0; i < data.images.length; i++) { %>
+            <img
+              src="<%= data.images[i].image_url %>"
+              alt="Ảnh <%= data.vietnamese_name %><%= i %>"
+            />
+            <% } %>
+          </div>
+          <div class="thumbnail-slider">
+            <% for(var i = 0; i < data.images.length; i++) { %>
+            <img
+              src=" <%= data.images[i].image_url %>"
+              alt="Ảnh <%= data.vietnamese_name %> <%= i %>"
+            />
+            <% } %>
+          </div>
+          <% if(data.identification){ %>
+          <h2 class="text-2xl font-semibold mb-1 mt-4">Đặc điểm nhận dạng</h2>
+          <p class="mb-4"><%-data.identification%></p>
+          <% } %> <% if(data.distribution){ %>
+          <h2 class="text-2xl font-semibold mb-1 mt-4">Phân bố</h2>
+          <p class="mb-4"><%-data.distribution%></p>
+          <% } %>
+        </div>
+        <div>
+          <h1 class="text-3xl font-bold mb-4">
+            <%= data.vietnamese_name %> (<%= data.latin_name %>)
+          </h1>
+          <ul class="space-y-2">
+            <li><strong>Tên khoa học:</strong> <%=data.latin_name %></li>
+            <% if(data.english_name){ %>
+            <li><strong>Tên tiếng Anh:</strong> <%=data.english_name %></li>
+            <% } %>
+
+            <li><strong>Họ:</strong> <%=data.family_name %></li>
+            <li><strong>Bộ:</strong> <%=data.order_name %></li>
+            <% if(data.isToxin){ %>
+            <li>
+              <strong>Độc tính:</strong>
+              <span class="text-red-500"><%=data.toxin_name %></span>
+            </li>
+            <% } %> <% if(data.status){ %>
+            <li><strong>Tình trạng bảo tồn:</strong> <%=data.status %></li>
+            <% } %>
+          </ul>
+
+          <div class="mt-4">
+            <hr />
+
+            <% if(data.description){ %>
+            <h2 class="text-2xl font-semibold mb-1 mt-4">Mô tả loài</h2>
+            <h2 class="mb-4"><%-data.description%></h2>
+            <% } %> <% if(data.habitat){ %>
+            <h2 class="text-2xl font-semibold mb-1 mt-4">
+              Sinh thái học/Tập tính
+            </h2>
+            <p class="mb-4"><%-data.habitat%></p>
+            <p><%-data.food%></p>
+            <% } %> <% if(data.reproduction){ %>
+            <h2 class="text-2xl font-semibold mb-1 mt-4">Sinh sản</h2>
+            <p class="mb-4"><%-data.reproduction%></p>
+            <% } %> <% if(data.value){ %>
+            <h2 class="text-2xl font-semibold mb-1 mt-4">Giá trị</h2>
+            <p class="mb-4"><%-data.value%></p>
+            <% } %> <% if(data.red_list_info){ %>
+            <h2 class="text-2xl font-semibold mb-1 mt-4">Bảo vệ</h2>
+            <p class="mb-4"><%-data.red_list_info%></p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div>
+          <h2 class="text-2xl font-semibold">Bản đồ phân bố</h2>
+          <p class="mb-4">
+            <!-- <i
+              >Bản đồ Mapbox sử dụng mã nguồn mở vị trí Hoàng Sa và Trường Sa</i
+            > -->
+          </p>
+          <div class="w-full bg-gray-300 flex items-center justify-center">
+            <div id="map" class="w-full"></div>
+          </div>
+          <% if(data.reference){ %>
+          <h2 class="text-2xl font-semibold mb-1 mt-4">Tài liệu kham khảo</h2>
+          <p class="mb-4"><%-data.reference%></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let mainSlider = tns({
+          container: ".main-slider",
+          items: 1,
+          slideBy: "page",
+          autoplay: false,
+          controls: false,
+          nav: false,
+        });
+
+        let thumbnailSlider = tns({
+          container: ".thumbnail-slider",
+          items: 3,
+          slideBy: 1,
+          autoplay: false,
+          controls: true,
+          nav: false,
+          loop: false,
+          gutter: 10,
+        });
+
+        let thumbnails = document.querySelectorAll(".thumbnail-slider img");
+        thumbnails.forEach((thumb, index) => {
+          thumb.addEventListener("click", () => {
+            mainSlider.goTo(index);
+          });
+        });
+      });
+    </script>
+    <script>
+      // Hàm để tải script động
+      function loadScript(url, callback) {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        if (script.readyState) {
+          // Chỉ dành cho IE
+          script.onreadystatechange = function () {
+            if (script.readyState === "loaded" || script.readyState === "complete") {
+              script.onreadystatechange = null;
+              callback();
+            }
+          };
+        } else {
+          // Tiêu chuẩn W3C
+          script.onload = function () {
+            callback();
+          };
+        }
+        script.src = url;
+        document.getElementsByTagName("head")[0].appendChild(script);
+      }
+
+      // Tải Mapbox script sau khi tài liệu đã sẵn sàng
+      document.addEventListener("DOMContentLoaded", function () {
+        loadScript("https://api.mapbox.com/mapbox-gl-js/v2.9.0/mapbox-gl.js", function () {
+          // Khởi tạo bản đồ Mapbox
+          mapboxgl.accessToken =
+            "pk.eyJ1IjoiaG9hbmduaGEiLCJhIjoiY2xiMDlyMzBzMTU2dzNvcHUwczlsNXVjZCJ9.kT1ivJT4_qE9WvfP-SCsRg";
+          var map = new mapboxgl.Map({
+            container: "map",
+            style: "mapbox://styles/hoangnha/clmiv0ndi01mh01qu2w20g8a9",
+            center: [106.7093, 10.7626], // Vị trí mặc định ở TP.HCM
+            zoom: 5,
+          });
+
+          // Thêm một marker nếu có thông tin vị trí
+          <% if (data.provinces) { %>
+            <% for(var i = 0; i < data.provinces.length; i++) { %>
+              new mapboxgl.Marker()
+            .setLngLat([<%= data.provinces[i].longitude %>, <%= data.provinces[i].latitude %>])
+            .addTo(map);
+              <% } %>
+
+          <% } %>
+        });
+      });
+    </script>
+  </body>
+</html>

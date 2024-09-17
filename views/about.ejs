@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Tra cứu rắn - Ứng dụng chuyên nghiệp giúp bạn nhận diện, tìm hiểu các loài rắn tại Việt Nam."
+    />
+    <meta
+      name="keywords"
+      content="tra cứu rắn, nhận diện rắn, thông tin về rắn, động vật hoang dã, rùa cạn, rùa nước, rắn tại Việt Nam, sách đỏ IUCN, sách đỏ Việt Nam"
+    />
+    <meta name="author" content="Nguyễn Hoàng Nhã" />
+    <title>
+      Tra cứu rắn - Ứng dụng nhận diện và tìm hiểu loài rắn tại Việt Nam
+    </title>
+
+    <link rel="canonical" href="https://hoangnha.site/" />
+
+    <!-- Open Graph for Social Media Sharing -->
+    <meta
+      property="og:title"
+      content="Tra cứu rắn - Nhận diện và tìm hiểu loài rắn tại Việt Nam"
+    />
+    <meta
+      property="og:description"
+      content="Ứng dụng chuyên nghiệp giúp bạn tra cứu và nhận diện các loài rắn ở Việt Nam, cùng thông tin từ các nguồn đáng tin cậy."
+    />
+    <meta property="og:image" content="images/logo_new.png" />
+
+    <meta property="og:type" content="website" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="images/logo_new.png" type="image/x-icon" />
+
+    <!-- Google Fonts - Poppins -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+    />
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        line-height: 1.6;
+        padding: 5px;
+      }
+      h1,
+      h2 {
+        font-weight: 600;
+      }
+      ul {
+        list-style-type: disc;
+        margin-left: 0px;
+      }
+      p {
+        margin: 10px 0;
+      }
+      header {
+        text-align: center;
+      }
+      footer {
+        text-align: center;
+        margin-top: 20px;
+      }
+      .card-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 20px;
+      }
+      .card {
+        width: 150px;
+        height: 150px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+      }
+      .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .phone-img {
+        width: 20%;
+        object-fit: contain;
+      }
+      .card:hover {
+        transform: scale(1.05);
+      }
+      .card a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-decoration: none;
+      }
+      .play-store-card img {
+        width: 200px;
+        /* height: 100px; */
+        padding: 10px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>
+        Tra cứu rắn - Ứng dụng nhận diện và tìm hiểu loài rắn tại Việt Nam
+      </h1>
+    </header>
+
+    <section>
+      <p>
+        <strong>"Tra cứu rắn"</strong> là ứng dụng di động mới mẻ giúp bạn nhanh
+        chóng <strong>tra cứu và nhận diện loài rắn</strong> một cách chính xác.
+        Với cơ sở dữ liệu phong phú từ các nguồn uy tín như
+        <strong>vncreatures.net, Wikipedia, Reptile Database</strong> và
+        <strong>iNaturalist</strong>, ứng dụng cung cấp thông tin chi tiết về
+        các loài rắn đang sống tại Việt Nam, bao gồm cả những loài có trong
+        <strong
+          ><a href="https://iucn.org/" target="_blank"
+            >Sách Đỏ IUCN quốc tế</a
+          ></strong
+        >
+        và
+        <strong
+          ><a
+            href="https://vi.wikipedia.org/wiki/S%C3%A1ch_%C4%91%E1%BB%8F_Vi%E1%BB%87t_Nam"
+            target="_blank"
+            >Sách Đỏ Việt Nam</a
+          ></strong
+        >.
+      </p>
+      <div class="card-container">
+        <div class="card">
+          <a href="https://vncreatures.net" target="_blank">
+            <img
+              src="https://vncreatures.net/logo.png"
+              alt="Sinh vật rừng Việt Nam"
+            />
+          </a>
+        </div>
+        <div class="card">
+          <a href="https://www.wikipedia.org" target="_blank">
+            <img
+              src="https://pplware.sapo.pt/wp-content/uploads/2018/06/wikipedia.jpg"
+              alt="Wikipedia Logo"
+            />
+          </a>
+        </div>
+        <div class="card">
+          <a href="https://reptile-database.reptarium.cz/" target="_blank">
+            <img
+              src="https://reptile-database.reptarium.cz/img/RD-logo.png"
+              alt="Reptile Database Logo"
+            />
+          </a>
+        </div>
+        <div class="card">
+          <a href="https://www.inaturalist.org" target="_blank">
+            <img
+              src="https://www.nps.gov/common/uploads/teachers/assets/images/nri/20200613/teachers/D5EC8188-EE46-80D3-6645474C4D76F7CA/D5EC8188-EE46-80D3-6645474C4D76F7CA.jpg"
+              alt="iNaturalist Logo"
+            />
+          </a>
+        </div>
+      </div>
+
+      <h2>Tính năng nổi bật:</h2>
+      <ul>
+        <li>
+          <strong>Nhận diện rắn qua hình ảnh:</strong> Chỉ cần chụp ảnh, ứng
+          dụng sẽ sử dụng API từ iNaturalist để xác định tên loài nhanh chóng.
+        </li>
+        <li>
+          <strong>Danh sách đầy đủ các loài rắn:</strong> Tra cứu các loài rắn
+          tại Việt Nam với thông tin khoa học chính xác, được cập nhật thường
+          xuyên.
+        </li>
+        <li>
+          <strong>Chi tiết loài rắn:</strong> Xem các bài viết chuyên sâu về
+          từng loài, từ đặc điểm sinh học đến vị trí phân bố.
+        </li>
+        <li>
+          <strong>Tìm kiếm theo tọa độ:</strong> Lọc và tìm kiếm loài rắn dựa
+          trên vị trí địa lý của bạn.
+        </li>
+        <li>
+          <strong>Giao diện tối ưu:</strong> Giao diện dễ sử dụng, hỗ trợ chế độ
+          sáng và tối.
+        </li>
+        <li>
+          <strong>Tối ưu cho di động:</strong> Thiết kế linh hoạt, thân thiện
+          với mọi kích thước màn hình.
+        </li>
+      </ul>
+
+      <div class="card-container">
+        <img
+          class="phone-img"
+          alt="Hình ảnh ứng dụng 1"
+          src="images/slide3.1.png"
+        />
+        <img
+          class="phone-img"
+          alt="Hình ảnh ứng dụng 2"
+          src="images/slide4.png"
+        />
+        <img
+          class="phone-img"
+          alt="Hình ảnh ứng dụng 3"
+          src="images/slide5.png"
+        />
+        <img
+          class="phone-img"
+          alt="Hình ảnh ứng dụng 4"
+          src="images/slide6.png"
+        />
+      </div>
+
+      <h2>Giới thiệu ứng dụng</h2>
+      <p>
+        Ứng dụng <strong>Tra cứu rắn</strong> được phát triển bởi
+        <strong>Nguyễn Hoàng Nhã</strong>, sinh viên Đại học FPT, nhằm mục đích
+        phục vụ cộng đồng yêu thích sinh vật. Ứng dụng có giao diện đơn giản, dễ
+        sử dụng, giúp người dùng nhanh chóng tiếp cận thông tin về các loài rắn
+        tại Việt Nam. Thông tin được tổng hợp từ nhiều nguồn đáng tin cậy như
+        vncreatures.net, Wikipedia, Reptile Database và iNaturalist, đảm bảo
+        tính chính xác và cập nhật liên tục.
+      </p>
+
+      <h2>Tại sao chọn "Tra cứu rắn"?</h2>
+      <p>
+        Ứng dụng không chỉ giúp bạn <strong>nhận diện loài rắn</strong> mà còn
+        cung cấp cái nhìn sâu sắc về <strong>đời sống sinh học</strong> của các
+        loài rắn tại Việt Nam. Đây là công cụ không thể thiếu cho những người
+        yêu thiên nhiên và muốn tìm hiểu về <strong>động vật hoang dã</strong>.
+      </p>
+
+      <h2>Tải ngay ứng dụng "Tra cứu rắn"</h2>
+      <p>
+        Khám phá ngay thế giới rắn phong phú với "Tra cứu rắn"!
+        <strong>Tải ứng dụng</strong> trên Google Play và
+        <strong>bắt đầu hành trình tìm hiểu</strong> các loài rắn tại Việt Nam
+        ngay hôm nay.
+      </p>
+      <div class="play-store-card">
+        <a
+          href="https://play.google.com/store/apps/details?id=com.visnake"
+          target="_blank"
+        >
+          <img
+            src="https://logowik.com/content/uploads/images/google-play-badge-english-get-it-on-google-play7825.logowik.com.webp"
+            alt="Available on Google Play"
+          />
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        &copy; 2024 - Tra cứu rắn. Phát triển bởi Nguyễn Hoàng Nhã. All rights
+        reserved.
+      </p>
+    </footer>
+  </body>
+</html>

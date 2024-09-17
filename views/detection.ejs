@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chi Tiết Nhận Diện</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .upload-container {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .drop-area {
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        background-color: #fff;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .drop-area p {
+        margin: 0;
+        color: #666;
+      }
+
+      #fileInput {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      .preview {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .preview img {
+        max-width: 100%;
+        border-radius: 10px;
+      }
+
+      .results-container {
+        margin-top: 20px;
+      }
+
+      .result-item {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        padding: 10px 0;
+      }
+
+      .result-item img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-right: 10px;
+      }
+
+      .result-item .result-details {
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+      <div class="mb-4">
+        <a
+          href="/"
+          class="inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+        >
+          Quay lại
+        </a>
+      </div>
+      <h1 class="text-2xl font-bold mb-6 text-center">Chi Tiết Nhận Diện</h1>
+      <div class="upload-container">
+        <div id="drop-area" class="drop-area">
+          <strong>Nhận diện bằng hình ảnh</strong>
+          <p>Kéo và thả ảnh vào đây hoặc nhấn để chọn ảnh</p>
+          <input type="file" id="fileInput" accept="image/*" />
+        </div>
+        <div id="preview" class="preview"></div>
+      </div>
+
+      <div id="results" class="results-container">
+        <div class="result-item">
+          <img src="https://via.placeholder.com/100" alt="Kết quả nhận diện" />
+          <div class="result-details">
+            <h3 class="text-lg font-semibold">Tên Loài</h3>
+            <p>Độ chính xác: 10%</p>
+          </div>
+        </div>
+        <!-- Thêm nhiều kết quả ở đây nếu cần -->
+      </div>
+    </div>
+  </body>
+</html>

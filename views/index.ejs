@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="images/logo_new.png" type="image/x-icon" />
+  <title>Danh sách các loại rắn ở Việt Nam | Tìm kiếm rắn | Thông tin chi tiết</title>
+  <meta name="description" content="Khám phá danh sách các loài rắn tại Việt Nam, bao gồm thông tin chi tiết về rắn độc và không độc. Tìm hiểu cách nhận diện các loài rắn nguy hiểm và xem hình ảnh, tên khoa học của chúng. Đảm bảo bạn không bỏ lỡ bất kỳ loài rắn quan trọng nào với hướng dẫn chi tiết từ chúng tôi." />
+  <meta name="keywords" content="danh sách các loài rắn Việt Nam, rắn độc và không độc, thông tin rắn tại Việt Nam, phân biệt các loài rắn, rắn nguy hiểm Việt Nam" />
+  <link rel="canonical" href="https://hoangnha.site/" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DVPYV2NSRT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-DVPYV2NSRT");
+  </script>
+
+
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <script src="https://unpkg.com/heroicons@1.0.6/outline/index.js"></script>
+
+  <link rel="stylesheet" href="stylesheets/style.css">
+</head>
+
+<body class="bg-gray-100">
+  <div class="flex flex-col md:flex-row">
+    <div id="sidebar" class="w-full md:w-1/4 bg-white p-4 shadow-lg sidebar-transition sidebar-visible sidebar-fixed">
+      <h2 class="text-xl font-bold mb-4">Tìm kiếm rắn</h2>
+      <form>
+        <input type="text" name="q" value="<%= q ? q : '' %>" placeholder="Tìm kiếm theo tên..." class="w-full mb-3 p-1 border border-gray-300 rounded text-sm" />
+        <!-- <div class="mb-3">
+          <label class="block font-medium mb-1 text-sm">Loại rắn</label>
+          <select class="w-full p-1 border border-gray-300 rounded text-sm">
+            <option>Tất cả</option>
+            <option>Rắn độc</option>
+            <option>Rắn không độc</option>
+          </select>
+        </div> -->
+        <button type="submit" class="w-full bg-blue-500 text-white py-1 rounded hover:bg-blue-600 text-sm">
+          Áp dụng
+        </button>
+      </form>
+
+      <!-- <div class="upload-container">
+        <div id="drop-area" class="drop-area">
+          <strong>Nhận diện bằng hình ảnh</strong>
+          <p>Kéo và thả ảnh vào đây hoặc nhấn để chọn ảnh</p>
+          <input type="file" id="fileInput" accept="image/*" />
+        </div>
+        <div id="preview" class="preview"></div>
+      </div> -->
+
+      <div class="app-container">
+        <div>
+
+          <div class="play-store-card">
+            <a href="https://play.google.com/store/apps/details?id=com.visnake" target="_blank">
+              <img src="https://static.vecteezy.com/system/resources/previews/024/170/871/original/badge-google-play-and-app-store-button-download-free-png.png" alt="Available on Google Play" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- Main Content -->
+    <div class="main-content ">
+
+      <%- include('components/navbar'); -%>
+
+      <div class="p-6">
+        <div class="flex justify-between items-center">
+          <h1 class="text-2xl font-bold mb-6">Danh sách các loài rắn tại Việt Nam</h1>
+          <div class="flex space-x-2">
+            <a href="?table=true" class="flex items-center px-4 py-2 <% if(isTable == 'true'){%> bg-blue-500 text-white <%} %> font-semibold rounded-lg hover:bg--600 focus:outline-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+              </svg>
+            </a>
+            <a href="?table=false" class="flex <% if(isTable != 'true'){%> bg-blue-500 text-white <%} %> items-center px-4 py-2 font-semibold rounded-lg hover:bg--600 focus:outline-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h6v6H3V3zm0 8h6v6H3v-6zm8-8h6v6h-6V3zm0 8h6v6h-6v-6z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="flex justify-between ">
+          <p class="relative block rounded px-3 py-1.5 text-sm transition duration-300">Có <%=data.length%> trên tổng số <strong><%=totalSpecies%></strong></p>
+          <%- include('components/pagination'); -%>
+        </div>
+
+
+        <% if (isTable == 'true') { %>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" class="px-6 py-3">Hình ảnh</th>
+                <th scope="col" class="px-6 py-3">Tên</th>
+                <th scope="col" class="px-6 py-3">Bộ họ</th>
+                <th scope="col" class="px-6 py-3">Khác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(var i = 0; i < data.length; i++) { %>
+              <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                <td style="padding: 5px">
+                  <div class="w-32 h-32 bg-white shadow-lg rounded-lg overflow-hidden">
+                    <img src="<%= data[i].images[0].image_url %>" alt="<%= data[i].vietnamese_name %>" class="w-full h-full object-fill" />
+                  </div>
+                </td>
+                <td class="px-6 py-4 font-medium  whitespace-nowrap dark:text-white">
+                  <strong class=" text-gray-900"><%= data[i].vietnamese_name %></strong><br /><i></i>
+                  <% if(data[i].latin_name) { %> Khoa học: <%=
+                      data[i].latin_name %> <% } %></i><br />
+                  <% if(data[i].english_name) { %> Tiếng anh: <%=
+                    data[i].english_name %> <% } %>
+                </td>
+                <td class="px-6 py-4">
+                  Bộ: <%= data[i].order_name %> <br />Họ: <%=
+                    data[i].family_name %>
+                </td>
+                <td class="px-6 py-4 text-red-500">
+                  <%= data[i].red_list_info %>
+                </td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+        <% } else { %>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <% for(var i = 0; i < data.length; i++) { %>
+          <div class="bg-white p-3 rounded-lg shadow-md">
+            <a href="/chi-tiet/<%=data[i].slug%>" class="link-detail" data-index="<%= i %>">
+              <div class="relative">
+                <img src="<%= data[i].images[0].image_url %>" alt="<%= data[i].vietnamese_name %>" class="w-full h-48 object-cover rounded-lg mb-2" />
+                <% if (data[i].isToxin == 'Rắn độc') { %>
+                <div class="absolute top-2 right-2">
+                  <span class="relative group cursor-pointer bg-red-500 text-white px-2 py-1 rounded-lg text-xs">
+                    Rắn độc
+                    <div class="tooltip hidden absolute top-full right-0 mt-2 bg-gray-700 text-white text-xs px-2 py-1 rounded">
+                      <%= data[i].toxin_name %>
+                    </div>
+                  </span>
+                </div>
+                <% } %>
+              </div>
+              <h2 class="text-lg font-bold"><%= data[i].vietnamese_name %></h2>
+              <% if (data[i].latin_name) { %>
+              <p class="text-gray-500 italic text-sm">
+                Khoa học: <%= data[i].latin_name %>
+              </p>
+              <% } %> <% if (data[i].english_name) { %>
+              <p class="text-gray-500 italic text-sm">
+                Tiếng anh: <%= data[i].english_name %>
+              </p>
+              <% } %>
+              <% if (data[i].other_name) { %>
+              <p class="text-gray-500 italic text-sm">
+                Tên khác: <%= data[i].other_name %>
+              </p>
+              <% } %>
+
+              <% if (data[i].red_list_info) { %>
+              <p class="text-red-500 italic text-sm ">
+                Bảo vệ: <%= data[i].red_list_info %>
+              </p>
+              <% } %>
+            </a>
+          </div>
+          <% } %>
+        </div>
+        <% } %>
+
+        <div class="flex justify-end ">
+          <%- include('components/pagination'); -%>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Danh sách các loài rắn tại Việt Nam",
+      "itemListElement": [
+        <% for(var i = 0; i < data.length; i++) { %> {
+          "@type": "ListItem",
+          "position": <%= i+1 %>,
+          "item": {
+            "@type": "Thing",
+            "name": "<%= data[i].vietnamese_name %>",
+            "image": "<%= data[i].images[0].image_url %>",
+            "url": "/chi-tiet/<%=data[i].slug%>"
+          }
+        }
+        <% if(i < data.length-1) { %>, <% } %>
+        <% } %>
+      ]
+    }
+  </script>
+
+  <script>
+    // JavaScript để điều khiển sidebar
+    const menuButton = document.getElementById("menuButton");
+    const menuButtonDesktop = document.getElementById("menuButtonDesktop");
+    const sidebar = document.getElementById("sidebar");
+
+    // Ẩn/hiện sidebar khi nhấn vào nút hamburger (mobile)
+    if (menuButton) {
+      menuButton.addEventListener("click", () => {
+        sidebar.classList.toggle("sidebar-hidden");
+        sidebar.classList.toggle("sidebar-visible");
+      });
+    }
+
+    // Ẩn/hiện sidebar khi nhấn vào nút hamburger (desktop)
+    if (menuButtonDesktop) {
+      menuButtonDesktop.addEventListener("click", () => {
+        sidebar.classList.toggle("sidebar-hidden");
+        sidebar.classList.toggle("sidebar-visible");
+      });
+    }
+  </script>
+
+</body>
+
+</html>
