@@ -43,7 +43,7 @@ router.get('/sitemap.xml', async (req, res) => {
       );
 
       // Tạo stream
-      const stream = new SitemapStream({ hostname: 'http://localhost:3000' });
+      const stream = new SitemapStream({ hostname: 'https://hoangnha.site' });
 
       // Pipe URL vào stream
       res.writeHead(200, { 'Content-Type': 'application/xml' });
