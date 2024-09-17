@@ -9,7 +9,7 @@
     />
     <meta name="author" content="Tên tác giả hoặc tổ chức của bạn" />
     <meta name="robots" content="index, follow" />
-    <link rel="icon" href="images/logo_new.png" type="image/x-icon" />
+    <link rel="icon" type="image/x-icon" href="images/logo_new.png" />
     <title>
       <%= data.vietnamese_name %> (<%= data.latin_name %>) - Thông tin chi tiết
       | Tên trang web
@@ -19,6 +19,22 @@
       name="description"
       content="Khám phá chi tiết về loài rắn <%= data.vietnamese_name %> (tên khoa học: <%= data.latin_name %>). Đây là loài <%= data.isToxin %>, thuộc họ <%= data.family_name %>. Tìm hiểu về đặc điểm, phân bố và sinh thái học ngay!"
     />
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-DVPYV2NSRT"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-DVPYV2NSRT");
+    </script>
 
     <script type="application/ld+json">
       {
@@ -136,19 +152,19 @@
             <h2 class="text-2xl font-semibold mb-1 mt-4">Mô tả loài</h2>
             <h2 class="mb-4"><%-data.description%></h2>
             <% } %> <% if(data.habitat){ %>
-            <h2 class="text-2xl font-semibold mb-1 mt-4">
+            <h3 class="text-2xl font-semibold mb-1 mt-4">
               Sinh thái học/Tập tính
-            </h2>
+            </h3>
             <p class="mb-4"><%-data.habitat%></p>
             <p><%-data.food%></p>
             <% } %> <% if(data.reproduction){ %>
-            <h2 class="text-2xl font-semibold mb-1 mt-4">Sinh sản</h2>
+            <h3 class="text-2xl font-semibold mb-1 mt-4">Sinh sản</h3>
             <p class="mb-4"><%-data.reproduction%></p>
             <% } %> <% if(data.value){ %>
-            <h2 class="text-2xl font-semibold mb-1 mt-4">Giá trị</h2>
+            <h3 class="text-2xl font-semibold mb-1 mt-4">Giá trị</h3>
             <p class="mb-4"><%-data.value%></p>
             <% } %> <% if(data.red_list_info){ %>
-            <h2 class="text-2xl font-semibold mb-1 mt-4">Bảo vệ</h2>
+            <h3 class="text-2xl font-semibold mb-1 mt-4">Bảo vệ</h3>
             <p class="mb-4"><%-data.red_list_info%></p>
             <% } %>
           </div>

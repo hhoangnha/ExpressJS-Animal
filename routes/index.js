@@ -1,4 +1,6 @@
 var express = require('express');
+const { SitemapStream, streamToPromise } = require('sitemap');
+const { Readable } = require('stream');
 var router = express.Router();
 const connection = require('../config/db');
 const { checkToxin, stripHtmlAndEscape } = require('../utils/utils');
@@ -8,6 +10,53 @@ router.get('/robots.txt', (req, res) => {
 });
 
 
+
+
+router.get('/sitemap.xml', async (req, res) => {
+  try {
+    // Truy vấn để lấy tất cả các slug của rắn
+    const snakeQuery = `
+      SELECT slug
+      FROM species
+      WHERE published = 1
+    `;
+
+    connection.query(snakeQuery, async (err, results) => {
+      if (err) {
+        console.error('Database query error:', err);
+        res.status(500).end();
+        return;
+      }
+
+      // Tạo mảng các URL
+      const links = results.map(snake => ({
+        url: `/chi-tiet/${snake.slug}`,
+        changefreq: 'weekly',
+        priority: 0.7
+      }));
+
+      // Thêm trang chủ và các trang tĩnh khác
+      links.unshift(
+        { url: '/', changefreq: 'daily', priority: 1 },
+        { url: '/about', changefreq: 'monthly', priority: 0.5 }
+        // Thêm các trang khác nếu cần
+      );
+
+      // Tạo stream
+      const stream = new SitemapStream({ hostname: 'http://localhost:3000' });
+
+      // Pipe URL vào stream
+      res.writeHead(200, { 'Content-Type': 'application/xml' });
+      const sitemapOutput = await streamToPromise(Readable.from(links).pipe(stream));
+
+      // Trả về XML
+      res.end(sitemapOutput.toString());
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).end();
+  }
+});
 /* GET home page. */
 router.get('/', function (req, res, next) {
   const provinceName = req.query.province;
