@@ -90,7 +90,8 @@
   <body class="bg-gray-100">
     <div class="container mx-auto px-4 py-8">
       <a
-        href="/"
+        href="#"
+        onclick="window.history.back(); return false;"
         class="mb-8 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
       >
         Quay lại
@@ -130,7 +131,10 @@
           <ul class="space-y-2">
             <li><strong>Tên khoa học:</strong> <%=data.latin_name %></li>
             <% if(data.english_name){ %>
-            <li><strong>Tên tiếng Anh:</strong> <%=data.english_name %></li>
+            <li>
+              <strong>Tên tiếng Anh:</strong>
+              <span class="text-blue-500"><%=data.english_name %></span>
+            </li>
             <% } %>
 
             <li><strong>Họ:</strong> <%=data.family_name %></li>

@@ -197,6 +197,10 @@ router.get('/', function (req, res, next) {
             isToxin: checkToxin(item.toxin_name)
           }));
 
+
+          // res.json(processedData)
+          // return;
+
           res.render('index', {
             data: processedData,
             isTable,

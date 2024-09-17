@@ -98,43 +98,45 @@
 
 
         <% if (isTable == 'true') { %>
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" class="px-6 py-3">Hình ảnh</th>
-                <th scope="col" class="px-6 py-3">Tên</th>
-                <th scope="col" class="px-6 py-3">Bộ họ</th>
-                <th scope="col" class="px-6 py-3">Khác</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% for(var i = 0; i < data.length; i++) { %>
-              <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                <td style="padding: 5px">
-                  <div class="w-32 h-32 bg-white shadow-lg rounded-lg overflow-hidden">
-                    <img src="<%= data[i].images[0].image_url %>" alt="<%= data[i].vietnamese_name %>" class="w-full h-full object-fill" />
-                  </div>
-                </td>
-                <td class="px-6 py-4 font-medium  whitespace-nowrap dark:text-white">
-                  <strong class=" text-gray-900"><%= data[i].vietnamese_name %></strong><br /><i></i>
-                  <% if(data[i].latin_name) { %> Khoa học: <%=
-                      data[i].latin_name %> <% } %></i><br />
-                  <% if(data[i].english_name) { %> Tiếng anh: <%=
-                    data[i].english_name %> <% } %>
-                </td>
-                <td class="px-6 py-4">
-                  Bộ: <%= data[i].order_name %> <br />Họ: <%=
-                    data[i].family_name %>
-                </td>
-                <td class="px-6 py-4 text-red-500">
-                  <%= data[i].red_list_info %>
-                </td>
-              </tr>
-              <% } %>
-            </tbody>
-          </table>
-        </div>
+          <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" class="w-32 px-6 py-3">Hình ảnh</th>
+                  <th scope="col" class="w-60 px-6 py-3">Tên</th>
+                  <th scope="col" class="w-48 px-6 py-3">Bộ họ</th>
+                  <th scope="col" class="w-36 px-6 py-3">Khác</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% for(var i = 0; i < data.length; i++) { %>
+                <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer" onclick="handleRowClick('<%= data[i].slug %>')">
+                  <td class="w-32 px-6 py-3">
+                    <div class="w-full h-32 bg-white shadow-lg rounded-lg overflow-hidden">
+                      <img style="min-width: 100px" src="<%= data[i].images[0].image_url %>" alt="<%= data[i].vietnamese_name %>" class="w-full h-full object-cover" />
+                    </div>
+                  </td>
+                  <td class="w-60 px-6 py-4 font-medium whitespace-normal dark:text-white">
+                    <strong class="text-gray-900"><%= data[i].vietnamese_name %></strong><br />
+                    <% if(data[i].latin_name) { %> Khoa học: <%=
+                        data[i].latin_name %> <% } %></i><br />
+                    <% if(data[i].english_name) { %> Tiếng anh: <%=
+                      data[i].english_name %> <% } %>
+                  </td>
+                  <td class="w-48 px-6 py-4">
+                    Bộ: <%= data[i].order_name %> <br />Họ: <%=
+                      data[i].family_name %>
+                  </td>
+                  <td class="w-36 px-6 py-4 text-red-500">
+                    <%= data[i].red_list_info %>
+                  </td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+          
+          
         <% } else { %>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           <% for(var i = 0; i < data.length; i++) { %>
@@ -232,6 +234,11 @@
         sidebar.classList.toggle("sidebar-visible");
       });
     }
+
+    function handleRowClick(slug) {
+    // Thay đổi URL hoặc thực hiện hành động chuyển trang ở đây
+    window.location.href = `/chi-tiet/${slug}`; // Ví dụ chuyển đến trang mới
+  }
   </script>
 
 </body>
