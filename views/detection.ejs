@@ -1,9 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chi Tiết Nhận Diện</title>
+    <title>Nhận Diện Loài Rắn Tại Việt Nam | Công Cụ Trực Tuyến Miễn Phí</title>
+    <meta
+      name="description"
+      content="Công cụ nhận diện loài rắn tại Việt Nam miễn phí, chính xác cao. Tải lên hình ảnh và nhận kết quả ngay lập tức. An toàn và dễ sử dụng cho mọi người."
+    />
+    <meta
+      name="keywords"
+      content="nhận diện rắn, loài rắn Việt Nam, công cụ nhận diện rắn, rắn độc, an toàn rắn cắn"
+    />
+    <link rel="canonical" href="https://ranviet.site/nhan-dien-ran" />
+    <link rel="icon" type="image/x-icon" href="images/logo_new.png" />
+    <meta
+      property="og:title"
+      content="Nhận Diện Loài Rắn Tại Việt Nam | Công Cụ Trực Tuyến Miễn Phí"
+    />
+    <meta
+      property="og:description"
+      content="Công cụ nhận diện loài rắn tại Việt Nam miễn phí, chính xác cao. Tải lên hình ảnh và nhận kết quả ngay lập tức."
+    />
+    <meta
+      property="og:image"
+      content="https://ranviet.site/images/logo_new.png"
+    />
+    <meta property="og:url" content="https://ranviet.site/nhan-dien-ran" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
@@ -22,6 +46,22 @@
       gtag("js", new Date());
 
       gtag("config", "G-FW4S1KP528");
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Công Cụ Nhận Diện Loài Rắn Tại Việt Nam",
+        "description": "Công cụ trực tuyến miễn phí giúp nhận diện các loài rắn tại Việt Nam thông qua hình ảnh được tải lên.",
+        "url": "https://ranviet.site/nhan-dien-ran",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "All",
+        "offers": {
+          "@type": "Offer",
+          "price": "0"
+        }
+      }
     </script>
 
     <style>
@@ -60,7 +100,7 @@
       }
 
       .preview img {
-        max-width: 100%;
+        max-width: 30%;
         border-radius: 10px;
       }
 
@@ -76,8 +116,8 @@
       }
 
       .result-item img {
-        width: 100px;
-        height: 100px;
+        width: 200px;
+        /* height: 300px; */
         object-fit: cover;
         border-radius: 10px;
         margin-right: 10px;
@@ -98,26 +138,107 @@
           Quay lại
         </a>
       </div>
-      <h1 class="text-2xl font-bold mb-6 text-center">Chi Tiết Nhận Diện</h1>
-      <div class="upload-container">
+      <h1 class="text-2xl font-bold text-center">Chi Tiết Nhận Diện</h1>
+      <h2 class="text-center">
+        Ứng dụng sử dụng trí tuệ nhân tạo đến từ
+        <a href="https://www.inaturalist.org/" target="_blank">Inaturalist</a>
+        để nhận diện các loại rắn
+      </h2>
+      <div class="upload-container mt-6">
         <div id="drop-area" class="drop-area">
           <strong>Nhận diện bằng hình ảnh</strong>
           <p>Kéo và thả ảnh vào đây hoặc nhấn để chọn ảnh</p>
-          <input type="file" id="fileInput" accept="image/*" />
+          <input name="image" type="file" id="fileInput" accept="image/*" />
+          <div id="preview" class="preview"></div>
         </div>
-        <div id="preview" class="preview"></div>
       </div>
 
       <div id="results" class="results-container">
-        <div class="result-item">
-          <img src="https://via.placeholder.com/100" alt="Kết quả nhận diện" />
-          <div class="result-details">
-            <h3 class="text-lg font-semibold">Tên Loài</h3>
-            <p>Độ chính xác: 10%</p>
-          </div>
-        </div>
-        <!-- Thêm nhiều kết quả ở đây nếu cần -->
+        <!-- Kết quả nhận diện sẽ được thêm ở đây -->
       </div>
     </div>
+
+    <script>
+      const fileInput = document.getElementById("fileInput");
+      const preview = document.getElementById("preview");
+      const resultsContainer = document.getElementById("results");
+
+      fileInput.addEventListener("change", handleImageUpload);
+
+      function handleImageUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+          // Hiển thị ảnh đã chọn trước khi upload
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const base64Image = e.target.result;
+            preview.innerHTML = `<img src="${base64Image}" alt="Preview" />`;
+
+            // Gửi yêu cầu tới máy chủ để nhận diện (Base64 image)
+            fetch("/detection", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                image: base64Image, // Gửi Base64 image
+              }),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                // Display the detection results
+                displayResults(data.data);
+              })
+              .catch((error) => {
+                console.error("Lỗi khi tải lên:", error);
+              });
+          };
+
+          reader.readAsDataURL(file); // Convert file to Base64
+        }
+      }
+
+      // Hiển thị kết quả nhận diện
+      function displayResults(data) {
+        resultsContainer.innerHTML = ""; // Xóa kết quả cũ
+
+        if (data.common_ancestor != null) {
+          const resultCommonItem = document.createElement("div");
+          resultCommonItem.classList.add("result-item");
+
+          resultCommonItem.innerHTML = `
+            <img src="${
+              data.common_ancestor.taxon.default_photo.medium_url
+            }" alt="${data.common_ancestor.taxon.default_photo.medium_url}" />
+            <div class="result-details">
+              <p class="text-red-500">*Chính xác nhất</p>
+              <h3 class="text-lg font-semibold">${
+                data.common_ancestor.taxon.name
+              }</h3>
+            
+              <p>Độ chính xác: ${Math.round(data.common_ancestor.score)}%</p>
+            </div>
+          `;
+          resultsContainer.appendChild(resultCommonItem);
+        }
+
+        data.results.forEach((result) => {
+          const resultItem = document.createElement("div");
+          resultItem.classList.add("result-item");
+
+          resultItem.innerHTML = `
+            <img src="${result.taxon.default_photo.medium_url}" alt="${
+            result.taxon.name
+          }" />
+            <div class="result-details">
+              <h3 class="text-lg font-semibold">${result.taxon.name}</h3>
+              <p>Độ chính xác: ${Math.round(result.combined_score)}%</p>
+            </div>
+          `;
+
+          resultsContainer.appendChild(resultItem);
+        });
+      }
+    </script>
   </body>
 </html>

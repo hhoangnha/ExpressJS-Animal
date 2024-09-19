@@ -9,12 +9,21 @@
     />
     <meta name="author" content="ranviet.site" />
     <meta name="robots" content="index, follow" />
-    <link rel="icon" type="image/x-icon" href="images/logo_new.png" />
+
     <title><%= data.vietnamese_name %> (<%= data.latin_name %>)</title>
 
     <meta
       name="description"
       content="Khám phá chi tiết về loài rắn <%= data.vietnamese_name %> (tên khoa học: <%= data.latin_name %>). Đây là loài <%= data.isToxin %>, thuộc họ <%= data.family_name %>. Tìm hiểu về đặc điểm, phân bố và sinh thái học ngay!"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://ranviet.site/images/logo_new.png"
+    />
+    <link
+      rel="canonical"
+      href="https://ranviet.site/chi-tiet/<%= data.slug %>"
     />
 
     <!-- Google tag (gtag.js) -->
@@ -41,14 +50,18 @@
         "image": "<%= data.images[0].image_url %>",
         "description": "<%= noHtmldescription %>",
         "scientificName": "<%= data.latin_name %>",
-        "taxonomicRank": "species",
-        "taxonomy": {
+        "taxonomicRank": "Species",
+        "taxonomicClassification": {
           "@type": "Taxon",
-          "taxonRank": "family",
+          "taxonRank": "Family",
           "name": "<%= data.family_name %>"
         },
         "habitat": "<%= noHtmlhabitat %>",
-        "diet": "<%=noHtmlfood %>"
+        "diet": "<%= noHtmlfood %>",
+        "isToxic": <%= data.isToxin ? 'true' : 'false' %>,
+        "conservationStatus": "<%= data.status %>",
+        "additionalType": "https://schema.org/Animal",
+        "url": "https://ranviet.site/chi-tiet/<%= data.slug %>"
       }
     </script>
 

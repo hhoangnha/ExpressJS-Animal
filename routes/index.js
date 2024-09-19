@@ -1,9 +1,13 @@
 var express = require('express');
 const { SitemapStream, streamToPromise } = require('sitemap');
 const { Readable } = require('stream');
+const fs = require('fs');
+const path = require('path');
+const FormData = require('form-data');
 var router = express.Router();
 const connection = require('../config/db');
 const { checkToxin, stripHtmlAndEscape } = require('../utils/utils');
+const { default: axios } = require('axios');
 router.get('/robots.txt', (req, res) => {
   res.type('text/plain');
   res.send("User-agent: *\nAllow: /\nDisallow: /private/");
@@ -217,9 +221,83 @@ router.get('/', function (req, res, next) {
 });
 
 
-router.get('/detection', function (req, res, next) {
+router.get('/nhan-dien-ran', function (req, res, next) {
   res.render('detection', {});
 })
+
+
+// Function to save Base64 image and return the file path
+function saveBase64Image(base64Data) {
+  return new Promise((resolve, reject) => {
+    const base64Image = base64Data.replace(/^data:image\/\w+;base64,/, '');
+    const buffer = Buffer.from(base64Image, 'base64');
+    let uniqueName = new Date();
+
+
+    // Define the file path and ensure the directory exists
+    const filePath = path.resolve(__dirname, 'uploads', uniqueName.toTimeString() + 'uploaded_image.jpg');
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+
+    // Write the buffer to the file
+    fs.writeFile(filePath, buffer, (err) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve(filePath);
+    });
+  });
+}
+
+router.post('/detection', async function (req, res, next) {
+  const { image } = req.body;
+
+  if (!image) {
+    return res.status(400).json({ msg: 'No image data received' });
+  }
+  const query = `
+  SELECT * FROM setup 
+  `;
+  connection.query(query, [req.params.id], async (err, results) => {
+    if (err) {
+      console.error('Database query error:', err);
+      res.status(500).json({ error: err });
+      return;
+    }
+    const token = results[0].value;
+    try {
+      // Save the Base64 image as a file
+      const filePath = await saveBase64Image(image);
+
+      // Create FormData and append the saved image file
+      const formData = new FormData();
+      formData.append('image', fs.createReadStream(filePath));
+      formData.append('taxon_id', 85553);
+
+      // Create an Axios instance for the external API request
+      const client = axios.create({
+        headers: {
+          ...formData.getHeaders(), // Ensure headers are set correctly for FormData
+          'Authorization': `Bearer ${token}`, // Replace with your actual token
+        },
+      });
+
+      // Send the image to the external API
+      const response = await client.post('https://api.inaturalist.org/v1/computervision/score_image', formData);
+
+      // Respond to the client with the API response
+      res.json({ msg: 'Image saved and sent successfully', data: response.data });
+
+    } catch (error) {
+      console.error('Error processing image:', error);
+      res.status(500).json({ msg: 'Error processing image' });
+    }
+  });
+
+
+});
+
+
+
 router.get('/gioi-thieu', function (req, res, next) {
   res.render('about', {});
 })
