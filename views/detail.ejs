@@ -234,52 +234,79 @@
       });
     </script>
     <script>
-      // Hàm để tải script động
-      function loadScript(url, callback) {
-        var script = document.createElement("script");
-        script.type = "text/javascript";
-        if (script.readyState) {
-          // Chỉ dành cho IE
-          script.onreadystatechange = function () {
-            if (script.readyState === "loaded" || script.readyState === "complete") {
-              script.onreadystatechange = null;
-              callback();
-            }
-          };
-        } else {
-          // Tiêu chuẩn W3C
-          script.onload = function () {
-            callback();
-          };
-        }
-        script.src = url;
-        document.getElementsByTagName("head")[0].appendChild(script);
+       const vietnamFlagUrl = 'https://ranviet.site/images/VN-Vietnam-Flag-icon.png';
+               const hoangSaCoords = [112.2063, 16.5037]; // Tọa độ của Hoàng Sa
+          const truongSaCoords = [114.2167, 10.2145]; // Tọa độ của Trường Sa
+
+
+              // Hàm để tải script động
+              function loadScript(url, callback) {
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                if (script.readyState) {
+                  // Chỉ dành cho IE
+                  script.onreadystatechange = function () {
+                    if (script.readyState === "loaded" || script.readyState === "complete") {
+                      script.onreadystatechange = null;
+                      callback();
+                    }
+                  };
+                } else {
+                  // Tiêu chuẩn W3C
+                  script.onload = function () {
+                    callback();
+                  };
+                }
+                script.src = url;
+                document.getElementsByTagName("head")[0].appendChild(script);
+              }
+
+              // Tải Mapbox script sau khi tài liệu đã sẵn sàng
+              document.addEventListener("DOMContentLoaded", function () {
+                loadScript("https://api.mapbox.com/mapbox-gl-js/v2.9.0/mapbox-gl.js", function () {
+                  // Khởi tạo bản đồ Mapbox
+                  mapboxgl.accessToken =
+                    "pk.eyJ1IjoiaG9hbmduaGEiLCJhIjoiY2xiMDlyMzBzMTU2dzNvcHUwczlsNXVjZCJ9.kT1ivJT4_qE9WvfP-SCsRg";
+                  var map = new mapboxgl.Map({
+                    container: "map",
+                    style: "mapbox://styles/hoangnha/clmiv0ndi01mh01qu2w20g8a9",
+                    center: [106.7093, 10.7626], // Vị trí mặc định ở TP.HCM
+                    zoom: 5,
+                  });
+
+                   // Thêm markers cho Hoàng Sa và Trường Sa với lá cờ Việt Nam
+      new mapboxgl.Marker({
+        element: createFlagElement(vietnamFlagUrl), // Tạo element cờ Việt Nam
+      })
+      .setLngLat(hoangSaCoords) // Vị trí Hoàng Sa
+      .addTo(map);
+
+      new mapboxgl.Marker({
+        element: createFlagElement(vietnamFlagUrl), // Tạo element cờ Việt Nam
+      })
+      .setLngLat(truongSaCoords) // Vị trí Trường Sa
+      .addTo(map);
+
+                  // Thêm một marker nếu có thông tin vị trí
+                  <% if (data.provinces) { %>
+                    <% for(var i = 0; i < data.provinces.length; i++) { %>
+                      new mapboxgl.Marker()
+                    .setLngLat([<%= data.provinces[i].longitude %>, <%= data.provinces[i].latitude %>])
+                    .addTo(map);
+                      <% } %>
+
+                  <% } %>
+                });
+              });
+
+              function createFlagElement(flagUrl) {
+        var flag = document.createElement('img');
+        flag.src = flagUrl;
+        flag.style.width = '50px';
+        flag.style.height = '50px';
+        // flag.style.borderRadius = '50%';
+        return flag;
       }
-
-      // Tải Mapbox script sau khi tài liệu đã sẵn sàng
-      document.addEventListener("DOMContentLoaded", function () {
-        loadScript("https://api.mapbox.com/mapbox-gl-js/v2.9.0/mapbox-gl.js", function () {
-          // Khởi tạo bản đồ Mapbox
-          mapboxgl.accessToken =
-            "pk.eyJ1IjoiaG9hbmduaGEiLCJhIjoiY2xiMDlyMzBzMTU2dzNvcHUwczlsNXVjZCJ9.kT1ivJT4_qE9WvfP-SCsRg";
-          var map = new mapboxgl.Map({
-            container: "map",
-            style: "mapbox://styles/hoangnha/clmiv0ndi01mh01qu2w20g8a9",
-            center: [106.7093, 10.7626], // Vị trí mặc định ở TP.HCM
-            zoom: 5,
-          });
-
-          // Thêm một marker nếu có thông tin vị trí
-          <% if (data.provinces) { %>
-            <% for(var i = 0; i < data.provinces.length; i++) { %>
-              new mapboxgl.Marker()
-            .setLngLat([<%= data.provinces[i].longitude %>, <%= data.provinces[i].latitude %>])
-            .addTo(map);
-              <% } %>
-
-          <% } %>
-        });
-      });
     </script>
   </body>
 </html>
